@@ -44,28 +44,7 @@ pipeline {
             }
         }
         stage('K8s Deployment') {
-            agent {
-                kubernetes {
-                  label 'kubectl-agent'
-                  defaultContainer 'jnlp'
-                  yaml """
-                    apiVersion: v1
-                    kind: Pod
-                    metadata:
-                      namespace: jenkins
-                      labels:
-                        some-label: kubectl
-                    spec:
-                      containers:
-                      - name: kubectl
-                        image: rancher/kubectl:v1.31.9-arm64
-                        command:
-                        - cat
-                        tty: true
-                    """
-                  retries 2
-                }
-            }
+            agent { label 'kubernetes'}
             steps {
                container('kubectl'){
                 sh 'kubectl apply -f devops4-deploy.yml'
@@ -73,28 +52,7 @@ pipeline {
             }
         }
         stage('K8s Service') {
-            agent {
-                kubernetes {
-                  label 'kubectl-agent'
-                  defaultContainer 'jnlp'
-                  yaml """
-                    apiVersion: v1
-                    kind: Pod
-                    metadata:
-                      namespace: jenkins
-                      labels:
-                        some-label: kubectl
-                    spec:
-                      containers:
-                      - name: kubectl
-                        image: rancher/kubectl:v1.31.9-arm64
-                        command:
-                        - cat
-                        tty: true
-                    """
-                  retries 2
-                }
-            }
+            agent { label 'kubernetes'}
             steps {
                container('kubectl'){
                 sh 'kubectl apply -f devops4-service.yml'
