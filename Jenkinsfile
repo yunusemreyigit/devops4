@@ -7,6 +7,7 @@ pipeline {
             apiVersion: v1
             kind: Pod
             metadata:
+              namespace: jenkins
               labels:
                 some-label: kubectl
             spec:
