@@ -1,5 +1,25 @@
 pipeline {
-   agent any
+    agent {
+        kubernetes {
+          label 'kubectl-agent'
+          defaultContainer 'jnlp'
+          yaml """
+            apiVersion: v1
+            kind: Pod
+            metadata:
+              labels:
+                some-label: kubectl
+            spec:
+              containers:
+              - name: kubectl
+                image: rancher/kubectl
+                command:
+                - cat
+                tty: true
+            """
+          retries 2
+        }
+    }
     environment{
     DOCKERHUB_CREDENTIALS = credentials("DockerHub")
     }
@@ -40,12 +60,16 @@ pipeline {
         }
         stage('K8s Deployment') {
             steps {
+               container('kubectl'){
                 sh 'kubectl apply -f devops4-deploy.yml'
+               }
             }
         }
         stage('K8s Service') {
             steps {
+               container('kubectl'){
                 sh 'kubectl apply -f devops4-service.yml'
+               }
             }
         }
     }
