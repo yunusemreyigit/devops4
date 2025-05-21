@@ -46,7 +46,7 @@ pipeline {
         stage('K8s Deployment') {
             agent { label 'kubectl'}
             steps {
-               container('kubectl'){
+               container('kubectl-container'){
                 sh 'kubectl apply -f devops4-deploy.yml'
                }
             }
@@ -54,7 +54,7 @@ pipeline {
         stage('K8s Service') {
             agent { label 'kubectl'}
             steps {
-               container('kubectl'){
+               container('kubectl-container'){
                 sh 'kubectl apply -f devops4-service.yml'
                }
             }
