@@ -1,23 +1,5 @@
 pipeline {
-    agent {
-        kubernetes {
-          yaml '''
-            apiVersion: v1
-            kind: Pod
-            metadata:
-              labels:
-                some-label: kubectl
-            spec:
-              containers:
-              - name: kubectl
-                image: rancher/kubectl
-                command:
-                - cat
-                tty: true
-            '''
-          retries 2
-        }
-    }
+   agent any
     environment{
     DOCKERHUB_CREDENTIALS = credentials("DockerHub")
     }
