@@ -7,5 +7,7 @@ spec:
   selector:
     app: devops4
   ports:
-    - port: 8080
+    - port: 8081
       targetPort: 8080
+      nodePort: 32140
+      protocol: TCP
