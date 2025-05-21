@@ -10,7 +10,7 @@ pipeline {
             spec:
               containers:
               - name: kubectl
-                image: docker pull rancher/kubectl
+                image: rancher/kubectl
                 command:
                 - cat
                 tty: true
