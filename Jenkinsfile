@@ -21,6 +21,7 @@ pipeline {
         }
         stage('Docker Image') {
             steps {
+                sh 'docker --version'
                 echo 'Creating image....'
                 sh 'docker build -t yunusemreyigit/app .'
             }
