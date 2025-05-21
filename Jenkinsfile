@@ -4,7 +4,7 @@ pipeline {
     DOCKERHUB_CREDENTIALS = credentials("DockerHub")
     }
     triggers{
-    poolSCM '* * * * *'
+    poollSCM '* * * * *'
     }
     stages {
         stage('Pull') {
