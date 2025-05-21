@@ -40,12 +40,12 @@ pipeline {
         }
         stage('K8s Deployment') {
             steps {
-                echo 'kubectl apply -f devops4-deploy.yml'
+                sh 'kubectl apply -f devops4-deploy.yml'
             }
         }
         stage('K8s Service') {
             steps {
-                echo 'kubectl apply -f devops4-service.yml'
+                sh 'kubectl apply -f devops4-service.yml'
             }
         }
     }
