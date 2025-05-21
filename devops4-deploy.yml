@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops4-depl
+  labels:
+    app: devops4
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops4
+
+  template:
+    metadata:
+      labels:
+        app: devops4
+    spec:
+      containers:
+        - name: devops4
+          image: yunusemreyigit/devops4:latest
+          ports:
+            - containerPort: 8080

@@ -1,19 +1,22 @@
 pipeline {
     agent any
-    enviroment{
+    environment{
     DOCKERHUB_CREDENTIALS = credentials("DockerHub")
     }
+    triggers{
+    poolSCM '* * * * *'
+    }
     stages {
-        stage('Pull the project from Github') {
+        stage('Pull') {
             steps {
-                echo 'getting project..'
-                git 'https://github.com/yunusemreyigit/devops4'
+                echo 'Clone project..'
+                git 'https://github.com/yunusemreyigit/devops4.git'
             }
         }
         stage('Build') {
             steps {
                 echo 'Building..'
-                sh 'mvn clean package'
+                sh './mvnw clean package'
             }
         }
         stage('Docker Image') {
@@ -24,7 +27,7 @@ pipeline {
         }
         stage('Login DockerHub') {
             steps {
-                sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR --password $DOCKERHUB_CREDENTIALS_USR'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 echo 'Logged in'
             }
         }
@@ -34,6 +37,15 @@ pipeline {
                 echo 'Image is pushed!'
             }
         }
-
+        stage('K8s Deployment') {
+            steps {
+                echo 'kubectl apply -f devops4-deploy.yml'
+            }
+        }
+        stage('K8s Service') {
+            steps {
+                echo 'kubectl apply -f devops4-service.yml'
+            }
+        }
     }
 }
