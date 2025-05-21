@@ -58,7 +58,7 @@ pipeline {
                     spec:
                       containers:
                       - name: kubectl
-                        image: rancher/kubectl
+                        image: rancher/kubectl:v1.31.9-arm64
                         command:
                         - cat
                         tty: true
@@ -87,7 +87,7 @@ pipeline {
                     spec:
                       containers:
                       - name: kubectl
-                        image: rancher/kubectl
+                        image: rancher/kubectl:v1.31.9-arm64
                         command:
                         - cat
                         tty: true
