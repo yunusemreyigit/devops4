@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'kubectl'}
+    agent any
     environment{
     DOCKERHUB_CREDENTIALS = credentials("DockerHub")
     }
@@ -40,16 +40,9 @@ pipeline {
         }
         stage('K8s Deployment') {
             steps {
-               container('kubectl-container'){
-                sh 'kubectl apply -f devops4-deploy.yml'
-               }
-            }
-        }
-        stage('K8s Service') {
-            steps {
-               container('kubectl-container'){
-                sh 'kubectl apply -f devops4-service.yml'
-               }
+                script{
+                    kubernetesDeploy(configs: "devops4-deploy.yml", "devops4-service.yml")
+                }
             }
         }
     }
