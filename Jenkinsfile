@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        kubernetes {
-          label 'kubectl'
-        }
-      }
+    agent any
     environment{
     DOCKERHUB_CREDENTIALS = credentials("DockerHub")
     }
@@ -43,6 +39,9 @@ pipeline {
             }
         }
         stage('K8s Deployment') {
+        agent{
+            label 'kubectl'
+        }
             steps {
                 script{
                     kubernetesDeploy(configs: "devops4-deploy.yml", "devops4-service.yml")
