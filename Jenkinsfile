@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+          label 'kubectl'
+        }
+      }
     environment{
     DOCKERHUB_CREDENTIALS = credentials("DockerHub")
     }
