@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment{
     DOCKERHUB_CREDENTIALS = credentials("DockerHub")
+    KUBECONFIG='/home/okul/.kube/config'
     }
     triggers{
     pollSCM '*/5 * * * *'
