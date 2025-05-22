@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: devops4-depl
-  labels:
-    app: devops4
 spec:
   replicas: 1
   selector:
@@ -17,6 +15,7 @@ spec:
     spec:
       containers:
         - name: devops4
-          image: yunusemreyigit/app
+          image: yunusemreyigit/app:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8090
