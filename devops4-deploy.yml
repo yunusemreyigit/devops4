@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: devops4
-          image: yunusemreyigit/app
+          image: yunusemreyigit/app:latest
           ports:
             - containerPort: 8090
