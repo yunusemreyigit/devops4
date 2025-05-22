@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment{
     DOCKERHUB_CREDENTIALS = credentials("DockerHub")
+    KUBECONFIG='/var/lib/jenkins/config'
     }
     triggers{
     pollSCM '* * * * *'
@@ -39,13 +40,9 @@ pipeline {
             }
         }
         stage('K8s Deployment') {
-        agent{
-            label 'kubectl'
-        }
-            steps {
-                script{
-                    kubernetesDeploy(configs: "devops4-deploy.yml", "devops4-service.yml")
-                }
+                        steps {
+                sh 'kubectl apply -f devops4-deploy.yml'
+                sh 'kubectl apply -f devops4-service.yml'
             }
         }
     }
