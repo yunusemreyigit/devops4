@@ -5,7 +5,7 @@ pipeline {
     KUBECONFIG='/var/lib/jenkins/config'
     }
     triggers{
-    pollSCM '*/5 * * * *'
+    pollSCM '* * * * *'
     }
     stages {
         stage('Pull') {
