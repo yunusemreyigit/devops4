@@ -40,20 +40,8 @@ pipeline {
         }
         stage('K8s Deployment') {
                         steps {
-                withCredentials([string(credentialsId: 'sa-k8s-token', variable: 'KUBE_TOKEN')]) {
-                    sh '''
-                    curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"
-                    chmod u+x ./kubectl
-                    export KUBECONFIG=$(mktemp)
-                    ./kubectl config set-cluster do-fra1-ibb-tech --server=https://192.168.49.2:8443 --insecure-skip-tls-verify=true
-                    ./kubectl config set-credentials jenkins --token=${KUBE_TOKEN}
-                    ./kubectl config set-context default --cluster=minikube --user=jenkins --namespace=jenkins
-                    ./kubectl config use-context default
-                    ./kubectl get nodes
-                    ./kubectl apply -f devops4-service.yaml
-                    ./kubectl apply -f devops4-deployment.yaml
-                    '''
-                }
+                sh 'kubectl apply -f devops4-deploy.yml'
+                sh 'kubectl apply -f devops4-service.yml'
             }
         }
     }
